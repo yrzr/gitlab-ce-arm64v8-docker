@@ -50,8 +50,8 @@ build:
     - echo "RELEASE_PACKAGE=gitlab-ce" >> RELEASE
     - echo "RELEASE_VERSION=${RELEASE_VERSION}"  >> RELEASE
     - echo "DOWNLOAD_URL=https://${PKG_SERVER_URL}/gitlab-ce_${CI_COMMIT_TAG}-ce.0_arm64.deb" >> RELEASE
-    # missing package libatomic1 after version 13
-    - sed -i 's/less/less libatomic1/' ./Dockerfile
+    # use ubuntu 20.04 instead of 16.04
+    - sed -i 's/16.04/20.04/' ./Dockerfile
     - docker build -q -t ${DOCKER_NS}/${BASENAME}:${CI_COMMIT_TAG}-ce.0 -f ./Dockerfile ./
     # latest tag
     - cd ../../ && git fetch --tags && LATEST=$(git tag | sort -rV | head -n 1)
