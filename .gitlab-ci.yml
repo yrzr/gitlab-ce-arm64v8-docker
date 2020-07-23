@@ -54,7 +54,7 @@ build:
     - sed -i 's/less/less libatomic1/' ./Dockerfile
     - docker build -q -t ${DOCKER_NS}/${BASENAME}:${CI_COMMIT_TAG}-ce.0 -f ./Dockerfile ./
     # latest tag
-    - cd ../ && git fetch --tags && LATEST=$(git tag | sort -rV | head -n 1)
+    - cd ../../ && git fetch --tags && LATEST=$(git tag | sort -rV | head -n 1)
     - if [ "${LATEST}" == "${CI_COMMIT_TAG}" ]; then docker tag ${DOCKER_NS}/${BASENAME}:${CI_COMMIT_TAG}-ce.0 ${DOCKER_NS}/${BASENAME}:latest; fi
     # docker push
     - docker login --username ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD} 
