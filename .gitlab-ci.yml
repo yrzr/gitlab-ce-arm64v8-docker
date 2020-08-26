@@ -20,7 +20,7 @@ check:
     - git fetch --tags
     # check version
     - if [ -f ./version_list ]; then rm version_list; fi
-    - curl -s "https://pkg.yrzr.ocry.com" | grep "gitlab-ce_" | sed 's/.*gitlab-ce_\(.*\)-ce.*/\1/' | sort -rV >> version_list
+    - curl -s "https://pkg.yrzr.ocry.com" | grep "gitlab-ce_" | sed 's/.*gitlab-ce_\(.*\)_arm64.*/\1/' | sort -rV >> version_list
     # create tags
     - ./create-tags.sh
     - git push --tags https://${GITLAB_USER_LOGIN}:${PERSONAL_ACCESS_TOKEN}@git.yrzr.ocry.com/docker/gitlab-ce-arm64.git
@@ -40,22 +40,21 @@ build:
     - docker info
   script:
     - apk add --no-cache --upgrade bash coreutils
-    - RELEASE_VERSION="${CI_COMMIT_TAG}-ce.0" && echo ${RELEASE_VERSION}
-    - REMOTE_VERSION="${CI_COMMIT_TAG}+ce.0" && echo ${REMOTE_VERSION}
+    - REMOTE_VERSION=$(echo $CI_COMMIT_TAG | sed "s/-/+/") && echo ${REMOTE_VERSION}
     # fetch dockerfile
     - git clone -b ${REMOTE_VERSION} --depth=1 https://gitlab.com/gitlab-org/omnibus-gitlab.git
     - cd ./omnibus-gitlab/docker
     # write RELEASE
     - echo "PACKAGECLOUD_REPO=gitlab-ce" > RELEASE
     - echo "RELEASE_PACKAGE=gitlab-ce" >> RELEASE
-    - echo "RELEASE_VERSION=${RELEASE_VERSION}"  >> RELEASE
-    - echo "DOWNLOAD_URL=https://${PKG_SERVER_URL}/gitlab-ce_${CI_COMMIT_TAG}-ce.0_arm64.deb" >> RELEASE
+    - echo "RELEASE_VERSION=${CI_COMMIT_TAG}"  >> RELEASE
+    - echo "DOWNLOAD_URL=https://${PKG_SERVER_URL}/gitlab-ce_${CI_COMMIT_TAG}_arm64.deb" >> RELEASE
     # use ubuntu 20.04 instead of 16.04
     - sed -i 's/16.04/20.04/' ./Dockerfile
-    - docker build -q -t ${DOCKER_NS}/${BASENAME}:${CI_COMMIT_TAG}-ce.0 -f ./Dockerfile ./
+    - docker build -q -t ${DOCKER_NS}/${BASENAME}:${CI_COMMIT_TAG} -f ./Dockerfile ./
     # latest tag
     - cd ../../ && git fetch --tags && LATEST=$(git tag | sort -rV | head -n 1)
-    - if [ "${LATEST}" == "${CI_COMMIT_TAG}" ]; then docker tag ${DOCKER_NS}/${BASENAME}:${CI_COMMIT_TAG}-ce.0 ${DOCKER_NS}/${BASENAME}:latest; fi
+    - if [ "${LATEST}" == "${CI_COMMIT_TAG}" ]; then docker tag ${DOCKER_NS}/${BASENAME}:${CI_COMMIT_TAG} ${DOCKER_NS}/${BASENAME}:latest; fi
     # docker push
     - docker login --username ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD} 
     - docker images && docker push ${DOCKER_NS}/${BASENAME}
