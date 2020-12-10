@@ -18,7 +18,7 @@ check:
     - git config --global user.email $GIT_USER_EMAIL && git config --global user.name $GIT_USER_NAME
     - mkdir -p ~/.ssh && echo "$GITLAB_SSH_PRIV_KEY" > ~/.ssh/id_rsa && ssh-keyscan -H ${CI_SERVER_HOST} > ~/.ssh/known_hosts && chmod -R 0600 ~/.ssh/
     - git fetch --tags && ./check-version.sh && ./create-tags.sh
-    - git push --tags ${GITLAB_USER_LOGIN}:${PERSONAL_ACCESS_TOKEN}@${CI_REPOSITORY_URL}
+    - git push --tags https://${GITLAB_USER_LOGIN}:${PERSONAL_ACCESS_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}.git
 
 build:
   image: arm64v8/docker:stable-git
