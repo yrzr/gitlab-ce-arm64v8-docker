@@ -46,7 +46,7 @@ build:
     # missing package libatomic1 after version 13
     - sed -i 's/less/less libatomic1/' ./Dockerfile
     # build
-    - docker build -q -t ${DOCKER_NS}/${BASENAME}:${CI_COMMIT_TAG} -f ./Dockerfile ./
+    - docker build -t ${DOCKER_NS}/${BASENAME}:${CI_COMMIT_TAG} -f ./Dockerfile ./
     # latest tag
     - cd ../../ && git fetch --tags && ./latest-tag.sh
     # docker push
