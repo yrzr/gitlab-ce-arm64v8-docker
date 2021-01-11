@@ -6,6 +6,7 @@ stages:
   - check
   - build
 
+
 check:
   image: docker:stable-git
   stage: check
@@ -36,17 +37,19 @@ build:
   script:
     - apk add --no-cache --upgrade bash coreutils
     # fetch dockerfile
-    - ./set-branch-name.sh && export BRANCH_NAME=$(cat branch_name) && echo ${BRANCH_NAME}
+    - BRANCH_NAME=$(echo ${CI_COMMIT_TAG} | sed 's/\-/\+/') && echo ${BRANCH_NAME}
     - git clone -b ${BRANCH_NAME} --depth=1 https://gitlab.com/gitlab-org/omnibus-gitlab.git
     - cd ./omnibus-gitlab/docker
     # write RELEASE
     - echo "PACKAGECLOUD_REPO=gitlab-ce" > RELEASE && echo "RELEASE_PACKAGE=gitlab-ce" >> RELEASE && echo "RELEASE_VERSION=${CI_COMMIT_TAG}"  >> RELEASE && echo "DOWNLOAD_URL=https://packages.gitlab.com/gitlab/gitlab-ce/packages/ubuntu/focal/gitlab-ce_${CI_COMMIT_TAG}_arm64.deb/download.deb" >> RELEASE
-    # use the same ubuntu version with the package
-    - sed -i 's/ubuntu:.*/ubuntu:focal/' ./Dockerfile
+    # debian:buster as base image
+    - sed -i 's/^FROM ubuntu.*/FROM debian\:buster/' Dockerfile
     # missing package libatomic1 after version 13
-    - sed -i 's/less/less libatomic1/' ./Dockerfile
+    - sed -i 's/less/less libatomic1/' Dockerfile
+    # debian has /etc/os-release instead of /etc/lsb-release
+    - sed -i 's/lsb-release/os-release/' assets/setup
     # build
-    - docker build -t ${DOCKER_NS}/${BASENAME}:${CI_COMMIT_TAG} -f ./Dockerfile ./
+    - docker build -t ${DOCKER_NS}/${BASENAME}:${CI_COMMIT_TAG} -f Dockerfile ./
     # latest tag
     - cd ../../ && git fetch --tags && ./latest-tag.sh
     # docker push
