@@ -1,11 +1,10 @@
 variables:
-  BASENAME: gitlab-ce-arm64v8
+  BASENAME: ${CI_PROJECT_NAME}
   DOCKER_TLS_CERTDIR: ""
 
 stages:
   - check
   - build
-
 
 check:
   image: docker:stable-git
