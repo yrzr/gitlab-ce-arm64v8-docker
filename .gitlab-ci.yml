@@ -1,5 +1,5 @@
 variables:
-  BASENAME: ${CI_PROJECT_NAME}
+  BASENAME: ${CI_PROJECT_NAME}v8
   DOCKER_TLS_CERTDIR: ""
 
 stages:
