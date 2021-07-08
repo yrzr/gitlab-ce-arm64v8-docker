@@ -44,7 +44,7 @@ build:
     # ubuntu:focal as base image
     - sed -i 's/^FROM ubuntu.*/FROM ubuntu\:focal/' Dockerfile
     # missing package libatomic1 after version 13
-    - sed -i 's/less/less libatomic1/' Dockerfile
+    - sed -i 's/\-recommends/\-recommends libatomic1/' Dockerfile
     # debian has /etc/os-release instead of /etc/lsb-release
     - sed -i 's/lsb-release/os-release/' assets/setup
     # build
