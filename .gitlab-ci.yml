@@ -53,4 +53,4 @@ build:
     - cd ../../ && git fetch --tags && ./latest-tag.sh
     # docker push
     - docker login --username ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD} 
-    - docker images && docker push ${DOCKER_NS}/${BASENAME}
+    - docker images && docker push -a ${DOCKER_NS}/${BASENAME}
