@@ -21,10 +21,10 @@ check:
     - git push --tags https://${GITLAB_USER_LOGIN}:${PERSONAL_ACCESS_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}.git
 
 build:
-  image: arm64v8/docker:git
+  image: docker:git
   stage: build
   services:
-    - name: arm64v8/docker:dind
+    - name: docker:dind
       alias: docker
   tags:
     - aarch64
