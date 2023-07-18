@@ -37,6 +37,7 @@ build:
     - apk add --no-cache --upgrade bash coreutils
     # fetch dockerfile
     - BRANCH_NAME=$(echo ${CI_COMMIT_TAG} | sed 's/\-/\+/') && echo ${BRANCH_NAME}
+    - if [ ! -z "$httpProxy" ]; then git config --global http.proxy $httpProxy; fi
     - git clone -b ${BRANCH_NAME} --depth=1 https://gitlab.com/gitlab-org/omnibus-gitlab.git
     - cd ./omnibus-gitlab/docker
     # write RELEASE
