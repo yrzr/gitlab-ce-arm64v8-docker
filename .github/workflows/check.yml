@@ -1,0 +1,30 @@
+name: check
+
+on:
+  schedule:
+    - cron:  '30 2 * * *'
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    env:
+      GIT_USER_EMAIL: "shenleidi@gmail.com"
+      GIT_USER_NAME: "Christopher SHEN"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Find packages
+        shell: bash
+        run: |
+          git tag
+          ./check-version.sh
+      - name: Create tags
+        shell: bash
+        run: |
+          ./create-tags.sh
+      - name: Push tags
+        run: |
+          git config --global user.email $GIT_USER_EMAIL && git config --global user.name $GIT_USER_NAME
+          git push --tags 
