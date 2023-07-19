@@ -2,7 +2,7 @@
 
 Compatible with **arm64v8** architectural.
 
-Source building code: https://github.com/yrzr/gitlab-ce-arm64v8-docker
+Images are built here: https://github.com/yrzr/gitlab-ce-arm64v8-docker
 
 Docker image: https://hub.docker.com/r/yrzr/gitlab-ce-arm64v8
 
@@ -10,7 +10,7 @@ Old builds on gitlab-ci: https://git.yrzr.tk/docker/gitlab-ce-arm64
 
 ## How to use
 
-The offical image (AMD64 only) is [here](https://hub.docker.com/r/gitlab/gitlab-ce/).
+The official image (AMD64 only) is [here](https://hub.docker.com/r/gitlab/gitlab-ce/).
 
 The following is an example of how to use this image.
 
