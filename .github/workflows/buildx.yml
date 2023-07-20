@@ -31,9 +31,9 @@ jobs:
           DOCKER_NAMESPACE=yrzr/gitlab-ce-arm64v8
           LATEST=$(git tag | sort -rV | head -n 1)
           if [ "${LATEST}" == "${{ github.ref_name }}" ]; then 
-            echo "DOCKER_IMAGE_TAGS=${DOCKER_NAMESPACE}:$THIS_TAG,${DOCKER_NAMESPACE}:latest">> $GITHUB_ENV
+            echo "DOCKER_IMAGE_TAGS=${DOCKER_NAMESPACE}:${{ github.ref_name }},${DOCKER_NAMESPACE}:latest">> $GITHUB_ENV
           else
-            echo "DOCKER_IMAGE_TAGS=${DOCKER_NAMESPACE}:$THIS_TAG">> $GITHUB_ENV
+            echo "DOCKER_IMAGE_TAGS=${DOCKER_NAMESPACE}:${{ github.ref_name }}">> $GITHUB_ENV
           fi
       - name: Check out https://github.com/gitlabhq/omnibus-gitlab.git
         uses: actions/checkout@v3
