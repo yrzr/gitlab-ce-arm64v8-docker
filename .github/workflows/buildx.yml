@@ -3,7 +3,7 @@ name: buildx
 on:
   push:
     tags:
-      - "*"
+      - '*'
 
 jobs:
   docker:
