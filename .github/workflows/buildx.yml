@@ -31,10 +31,21 @@ jobs:
           DOCKER_NAMESPACE=yrzr/gitlab-ce-arm64v8
           LATEST=$(git tag | sort -rV | head -n 1)
           if [ "${LATEST}" == "${{ github.ref_name }}" ]; then 
-            echo "DOCKER_IMAGE_TAGS=${DOCKER_NAMESPACE}:${{ github.ref_name }},${DOCKER_NAMESPACE}:latest">> $GITHUB_ENV
+            echo "IS_LATEST=true">> $GITHUB_ENV
           else
-            echo "DOCKER_IMAGE_TAGS=${DOCKER_NAMESPACE}:${{ github.ref_name }}">> $GITHUB_ENV
+            echo "IS_LATEST=false">> $GITHUB_ENV
           fi
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: yrzr/gitlab-ce-arm64v8
+          flavor: |
+            latest=${{ env.IS_LATEST }}
+          tags: |
+            type=ref,event=tag
+            type=match,pattern=(.*\..*)\..*-ce\..*,group=1
+            type=match,pattern=(.*)\..*\..*-ce\..*,group=1
       - name: Check out https://github.com/gitlabhq/omnibus-gitlab.git
         uses: actions/checkout@v3
         with:
@@ -56,4 +67,4 @@ jobs:
           context: ${{ env.DOCKER_DIR }}
           platforms: linux/arm64
           push: true
-          tags: ${{ env.DOCKER_IMAGE_TAGS }}
+          tags: ${{ steps.meta.outputs.tags }}
