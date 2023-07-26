@@ -36,6 +36,8 @@ docker run \
   yrzr/gitlab-ce-arm64v8:latest
 ```
 
+Since `16.2.1-ce.0`, you can also use tags like `yrzr/gitlab-ce-arm64v8:16.2` and `yrzr/gitlab-ce-arm64v8:16`.
+
 ## Redis problem
 
 Redis cannot start with its default config on ARM64, which stops gitlab-ce from starting. You have to change the setting manually on a fresh install or an upgrade and then restart gitlab-ce.
