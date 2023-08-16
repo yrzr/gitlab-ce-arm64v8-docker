@@ -2,7 +2,7 @@
 
 [![buildx](https://github.com/yrzr/gitlab-ce-arm64v8-docker/actions/workflows/buildx.yml/badge.svg)](https://github.com/yrzr/gitlab-ce-arm64v8-docker/actions/workflows/buildx.yml)
 
-https://img.shields.io/docker/pulls/yrzr/gitlab-ce-arm64v8
+[![docker hub](https://img.shields.io/docker/pulls/yrzr/gitlab-ce-arm64v8)](https://hub.docker.com/r/yrzr/gitlab-ce-arm64v8)
 
 Compatible with **arm64v8** architectural.
 
