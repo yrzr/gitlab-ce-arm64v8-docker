@@ -61,6 +61,7 @@ jobs:
           echo "DOWNLOAD_URL=https://packages.gitlab.com/gitlab/gitlab-ce/packages/ubuntu/focal/gitlab-ce_${{ github.ref_name }}_arm64.deb/download.deb" >> ./${{ env.DOCKER_DIR }}/RELEASE
           cat ./${{ env.DOCKER_DIR }}/RELEASE
           sed -i 's/\-recommends/\-recommends libatomic1/' ./${{ env.DOCKER_DIR }}/Dockerfile
+          echo 'sed -i "s\# ignore-warnings ARM64-COW-BUG\ignore-warnings ARM64-COW-BUG\g" /opt/gitlab/embedded/cookbooks/redis/templates/default/redis.conf.erb' >> ./${{ env.DOCKER_DIR }}/assets/setup
       - name: Build and Push Image
         uses: docker/build-push-action@v4
         with:
