@@ -33,7 +33,7 @@ docker run \
   --env GITLAB_ROOT_PASSWORD="YourPasswordHere" \
   --env GITLAB_OMNIBUS_CONFIG=" \
     registry['enable'] = false; \
-    GITLAB_OMNIBUS[your_other_configs] = here; "\
+    GITLAB_OMNIBUS[your_other_configs] = `options`; "\
   --volume /srv/gitlab-ce/conf:/etc/gitlab:z \
   --volume /srv/gitlab-ce/logs:/var/log/gitlab:z \
   --volume /srv/gitlab-ce/data:/var/opt/gitlab:z \
@@ -44,11 +44,6 @@ Since `16.2.1-ce.0`, you can also use tags like `yrzr/gitlab-ce-arm64v8:16.2` an
 
 ## Redis problem
 
-Redis cannot start with its default config on ARM64, which stops gitlab-ce from starting. You have to change the setting manually on a fresh install or an upgrade and then restart gitlab-ce.
+Redis cannot start with its default config on ARM64, which stops gitlab-ce from starting. ~~You have to change the setting manually on a fresh install or an upgrade and then restart gitlab-ce.~~
 
-```bash
-# change the path to your redis.conf
-echo "ignore-warnings ARM64-COW-BUG" >> /srv/gitlab-ce/data/redis/redis.conf
-# restart docker container
-docker restart gitlab-ce
-```
+Since version `16.6.0-ce.0`, "ignore-warnings ARM64-COW-BUG" will be added to `redis.conf` on start by default. You no longer need to add it manually.
