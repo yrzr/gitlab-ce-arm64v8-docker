@@ -28,7 +28,6 @@ docker run \
   --publish 22:22 \
   --publish 80:80 \
   --publish 443:443 \
-  --publish 127.0.0.1:8181:8181 \
   --hostname gitlab.example.com \
   --env GITLAB_ROOT_PASSWORD="YourPasswordHere" \
   --env GITLAB_OMNIBUS_CONFIG=" \
