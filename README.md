@@ -4,7 +4,7 @@
 
 [![docker hub](https://img.shields.io/docker/pulls/yrzr/gitlab-ce-arm64v8)](https://hub.docker.com/r/yrzr/gitlab-ce-arm64v8)
 
-Compatible with **arm64v8** architectural.
+Compatible with **arm64v8** architecture.
 
 Images are built here: https://github.com/yrzr/gitlab-ce-arm64v8-docker
 
