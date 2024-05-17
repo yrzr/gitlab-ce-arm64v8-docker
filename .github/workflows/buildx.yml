@@ -59,8 +59,9 @@ jobs:
           echo "RELEASE_PACKAGE=gitlab-ce" >> ./${{ env.DOCKER_DIR }}/RELEASE
           echo "RELEASE_VERSION=${{ github.ref_name }}"  >> ./${{ env.DOCKER_DIR }}/RELEASE
           echo "DOWNLOAD_URL=https://packages.gitlab.com/gitlab/gitlab-ce/packages/ubuntu/jammy/gitlab-ce_${{ github.ref_name }}_arm64.deb/download.deb" >> ./${{ env.DOCKER_DIR }}/RELEASE
+          # variable name changed and libatomic1 installed since this commit https://github.com/gitlabhq/omnibus-gitlab/commit/ca02e0c220f009a7b0758bb32ff43d20b448d52f
+          echo "DOWNLOAD_URL_arm64=https://packages.gitlab.com/gitlab/gitlab-ce/packages/ubuntu/jammy/gitlab-ce_${{ github.ref_name }}_arm64.deb/download.deb" >> ./${{ env.DOCKER_DIR }}/RELEASE
           cat ./${{ env.DOCKER_DIR }}/RELEASE
-          sed -i 's/\-recommends/\-recommends libatomic1/' ./${{ env.DOCKER_DIR }}/Dockerfile
           echo 'sed -i "s\# ignore-warnings ARM64-COW-BUG\ignore-warnings ARM64-COW-BUG\g" /opt/gitlab/embedded/cookbooks/redis/templates/default/redis.conf.erb' >> ./${{ env.DOCKER_DIR }}/assets/setup
       - name: Build and Push Image
         uses: docker/build-push-action@v4
