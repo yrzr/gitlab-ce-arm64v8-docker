@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SEARCH_PAGES='3'
+SEARCH_PAGES='10'
 
 if [ -f ./version_list ]; then
     rm version_list
