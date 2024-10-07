@@ -14,11 +14,11 @@ jobs:
         with:
           fetch-depth: 0
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
       - name: Login to container registry
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_TOKEN }}
@@ -37,7 +37,7 @@ jobs:
           fi
       - name: Docker meta
         id: meta
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@v5
         with:
           images: yrzr/gitlab-ce-arm64v8
           flavor: |
@@ -64,7 +64,7 @@ jobs:
           cat ./${{ env.DOCKER_DIR }}/RELEASE
           echo 'sed -i "s\# ignore-warnings ARM64-COW-BUG\ignore-warnings ARM64-COW-BUG\g" /opt/gitlab/embedded/cookbooks/redis/templates/default/redis.conf.erb' >> ./${{ env.DOCKER_DIR }}/assets/setup
       - name: Build and Push Image
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v6
         with:
           context: ${{ env.DOCKER_DIR }}
           platforms: linux/arm64
