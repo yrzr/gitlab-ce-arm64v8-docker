@@ -18,17 +18,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
+          fetch-depth: 0
           ssh-key: "${{ secrets.COMMIT_KEY }}"
       - name: Find packages
         shell: bash
         run: |
           git tag
           ./check-version.sh
-      - name: Create tags
+      - name: Create and push tags
         shell: bash
         run: |
-          ./create-tags.sh
-      - name: Push tags
-        run: |
-          git config --global user.email $GIT_USER_EMAIL && git config --global user.name $GIT_USER_NAME
-          for tag in $(git tag); do echo "git push origin $tag"; done
+          ./create-push-tags.sh

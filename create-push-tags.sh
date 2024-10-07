@@ -10,5 +10,6 @@ cat version_list | while read version; do
     done
     if ! ${HAVE_TAG}; then
         git tag ${version}
+        git push origin ${version}
     fi
 done
