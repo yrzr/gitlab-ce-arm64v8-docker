@@ -23,7 +23,7 @@ jobs:
       - name: Find packages
         shell: bash
         run: |
-          git tag
+          # git tag
           ./check-version.sh
       - name: Create and push tags
         shell: bash
