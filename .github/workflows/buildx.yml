@@ -3,14 +3,14 @@ name: buildx
 on:
   push:
     tags:
-      - '*'
+      - "*"
 
 jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Set up QEMU
@@ -47,7 +47,7 @@ jobs:
             type=match,pattern=(.*\..*)\..*-ce\..*,group=1
             type=match,pattern=(.*)\..*\..*-ce\..*,group=1
       - name: Check out https://github.com/gitlabhq/omnibus-gitlab.git
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: gitlabhq/omnibus-gitlab
           path: ${{ env.GITLAB_DIR }}
