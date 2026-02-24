@@ -1,3 +1,17 @@
+# ⚠️ DEPRECATION NOTICE
+
+**This project is no longer maintained and will be archived.**
+
+Starting from version **18.1**, GitLab officially provides `arm64` architecture support in their official Docker images. Previously, official images were only available for `amd64`, which was the reason this project was created.
+
+You should now use the official GitLab CE image instead of this one. To migrate, you only need to change the image name in your deployment configuration from `yrzr/gitlab-ce-arm64v8` to `gitlab/gitlab-ce`. No other changes are required.
+
+Official image: [https://hub.docker.com/r/gitlab/gitlab-ce/](https://hub.docker.com/r/gitlab/gitlab-ce/)
+
+**Thank you to everyone who has used and supported this project over the years!**
+
+---
+
 # GitLab-ce docker image builder for arm64v8
 
 [![buildx](https://github.com/yrzr/gitlab-ce-arm64v8-docker/actions/workflows/buildx.yml/badge.svg)](https://github.com/yrzr/gitlab-ce-arm64v8-docker/actions/workflows/buildx.yml)
@@ -14,7 +28,7 @@ Old builds on gitlab-ci: https://git.yrzr.tk/docker/gitlab-ce-arm64
 
 ## How to use
 
-The official image (AMD64 only) is [here](https://hub.docker.com/r/gitlab/gitlab-ce/).
+The official image is [here](https://hub.docker.com/r/gitlab/gitlab-ce/).
 
 The following is an example of how to use this image.
 
